@@ -31,6 +31,10 @@ jobs:
         role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
         aws-region: ${{ env.AWS_REGION }}
 
+    - name: Check AWS Identity
+      run: |
+        aws sts get-caller-identity
+
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
@@ -56,6 +60,10 @@ jobs:
         aws eks update-kubeconfig \
         --region $AWS_REGION \
         --name $CLUSTER_NAME
+    
+    - name: Verify EKS Access
+      run: |
+        kubectl get nodes
 
     - name: Deploy Application
       run: |
