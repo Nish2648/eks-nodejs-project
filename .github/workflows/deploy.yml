@@ -60,6 +60,10 @@ jobs:
         aws eks update-kubeconfig \
         --region $AWS_REGION \
         --name $CLUSTER_NAME
+
+    - name: Show kubeconfig context
+      run: |
+       kubectl config current-context
     
     - name: Verify EKS Access
       run: |
